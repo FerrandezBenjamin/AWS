@@ -40,29 +40,28 @@ Resources:
       Handler: api_find.get_devices          
 
   ApiRole:
-      Type: AWS::IAM::Role
-      Properties:
-        Path:
-          Fn::Sub: /${Stage}/${AppName}/serviceRoles/
-        RoleName:
-          Fn::Sub: ${AppName}-api-execution-role-${Stage}
-        AssumeRolePolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            - Effect: Allow
-              Principal:
-                Service:
-                  - apigateway.amazonaws.com
-              Action: sts:AssumeRole
-          Policies:
-            - PolicyName:
-              Fn::Sub: ${AppName}-api-execution-role-policy-${Stage}
-
-              PolicyDocument:
-              Version: '2012-10-17'
-              Statement:
-                - Effect: Allow
-                  Action:
-                    - lambda:InvokeFunction
-                  Resource:
-                    Fn::Sub: ${GetDevices.Arn}
+    Type: AWS::IAM::Role
+    Properties:
+      Path:
+        Fn::Sub: /${Stage}/${AppName}/serviceRoles/
+      RoleName:
+        Fn::Sub: ${AppName}-api-execution-role-${Stage}
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - apigateway.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName:
+            Fn::Sub: ${AppName}-api-execution-role-policy-${Stage}
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - lambda:InvokeFunction
+                Resource:
+                  Fn::Sub: ${GetDevices.Arn}

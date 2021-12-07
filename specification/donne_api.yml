@@ -38,8 +38,8 @@ paths:
           description: OK
           content:
             application/json:
-            schema:
-             $ref: '#/components/schemas/devices'
+              schema:
+                $ref: '#/components/schemas/devices'
       x-amazon-apigateway-integration:
         credentials:
           Fn::Sub: ${ApiRole.Arn}
