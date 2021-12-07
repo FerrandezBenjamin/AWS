@@ -65,3 +65,51 @@ Resources:
                   - lambda:InvokeFunction
                 Resource:
                   Fn::Sub: ${GetDevices.Arn}
+
+  Type: AWS::DynamoDB::Table
+  Properties: 
+    AttributeDefinitions: [
+      {
+        "AttributeName": "DeviceId",
+        "AttributeType": "N"
+      },
+      {
+        "AttributeName" : "DeviceName",
+        "AttributeType" : "S"
+      },
+      {
+        "AttributeName" : "DeviceType",
+        "AttributeType" : "S"
+      }
+    ],
+
+
+
+
+    ] 
+      - AttributeDefinition
+    BillingMode: String
+    ContributorInsightsSpecification: 
+      ContributorInsightsSpecification
+    GlobalSecondaryIndexes: 
+      - GlobalSecondaryIndex
+    KeySchema: 
+      - KeySchema
+    KinesisStreamSpecification: 
+      KinesisStreamSpecification
+    LocalSecondaryIndexes: 
+      - LocalSecondaryIndex
+    PointInTimeRecoverySpecification: 
+      PointInTimeRecoverySpecification
+    ProvisionedThroughput: 
+      ProvisionedThroughput
+    SSESpecification: 
+      SSESpecification
+    StreamSpecification: 
+      StreamSpecification
+    TableClass: String
+    TableName: campus-l3-dev-app-benjamin-table-device-dev
+    Tags: 
+      - Tag
+    TimeToLiveSpecification: 
+      TimeToLiveSpecification                
