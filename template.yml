@@ -68,25 +68,17 @@ Resources:
 
   Type: AWS::DynamoDB::Table
   Properties: 
-    AttributeDefinitions: [
-      {
-        "AttributeName": "DeviceId",
-        "AttributeType": "N"
-      },
-      {
-        "AttributeName" : "DeviceName",
-        "AttributeType" : "S"
-      },
-      {
-        "AttributeName" : "DeviceType",
-        "AttributeType" : "S"
-      }
-    ],
+    AttributeDefinitions: 
+      -
+        AttributeName: DeviceId
+        AttributeType: N
+      -
+        AttributeName: DeviceName
+        AttributeType: S
+      -
+        AttributeName: DeviceType
+        AttributeType: S
 
-
-
-
-    ] 
       - AttributeDefinition
     BillingMode: String
     ContributorInsightsSpecification: 
