@@ -5,7 +5,7 @@ Parameters:
   AppName:
     Type: String
     Default: campus-app
-Stage:
+  Stage:
     Type: String
     Default: dev
 
