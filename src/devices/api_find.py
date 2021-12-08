@@ -1,4 +1,5 @@
 import json
+import settings
 
 def get_devices(context, event):
     return {
@@ -7,3 +8,4 @@ def get_devices(context, event):
                             {"id": "b", "devType": "temperature", "name": "device2"}]),
         "headers": {'Access-Control-Allow-Origin': '*'}
     }
+    

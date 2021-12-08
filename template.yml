@@ -8,6 +8,9 @@ Parameters:
   Stage:
     Type: String
     Default: dev
+  TableName: 
+    Type: String
+    Default: campus-l3-dev-app-benjamin-table-device-dev
 
 Resources:
   Api:
@@ -38,7 +41,18 @@ Resources:
       Description: Get the list of devices
       CodeUri: ./src/devices
       Handler: api_find.get_devices          
-
+      Policies:
+        Version: "2012-10-17"
+        Statement: 
+          Sid: "ReadWriteTable"
+          Effect: "Allow"
+          Action: 
+            - dynamodb:GetItem
+            - dyanmodb:Scan
+            - dynamodb:Query
+          Resource: 
+            Fn::Sub: "arn:aws:dynamodb:*:*:table/${TableName}"
+          
   ApiRole:
     Type: AWS::IAM::Role
     Properties:
@@ -89,7 +103,8 @@ Resources:
       ProvisionedThroughput: 
         ReadCapacityUnits: "10"
         WriteCapacityUnits: "10"
-      TableName: "campus-l3-dev-app-benjamin-table-device-dev"
+      TableName:
+        Fn::Sub: "${TableName}"
       GlobalSecondaryIndexes:
       -
         IndexName: "DeviceType"
@@ -102,3 +117,4 @@ Resources:
         ProvisionedThroughput: 
             ReadCapacityUnits: "10"
             WriteCapacityUnits: "10"
+     
