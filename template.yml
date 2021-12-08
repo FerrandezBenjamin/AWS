@@ -65,43 +65,40 @@ Resources:
                   - lambda:InvokeFunction
                 Resource:
                   Fn::Sub: ${GetDevices.Arn}
+  DeviceTable:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      AttributeDefinitions: 
+      -
+        AttributeName: "DeviceId"
+        AttributeType: "N"
+      -
+        AttributeName: "DeviceName"
+        AttributeType: "S"
+      -
+        AttributeName: "DeviceType"
+        AttributeType: "S"
+      KeySchema:
+      -
+        AttributeName: "DeviceId"
+        KeyType: "HASH"
+      -
+        AttributeName: "DeviceName"
+        KeyType: "RANGE"
 
-  Type: AWS::DynamoDB::Table
-  Properties: 
-    AttributeDefinitions: 
+      ProvisionedThroughput: 
+        ReadCapacityUnits: "10"
+        WriteCapacityUnits: "10"
+      TableName: "campus-l3-dev-app-benjamin-table-device-dev"
+      GlobalSecondaryIndexes:
       -
-        AttributeName: DeviceId
-        AttributeType: N
-      -
-        AttributeName: DeviceName
-        AttributeType: S
-      -
-        AttributeName: DeviceType
-        AttributeType: S
-
-      - AttributeDefinition
-    BillingMode: String
-    ContributorInsightsSpecification: 
-      ContributorInsightsSpecification
-    GlobalSecondaryIndexes: 
-      - GlobalSecondaryIndex
-    KeySchema: 
-      - KeySchema
-    KinesisStreamSpecification: 
-      KinesisStreamSpecification
-    LocalSecondaryIndexes: 
-      - LocalSecondaryIndex
-    PointInTimeRecoverySpecification: 
-      PointInTimeRecoverySpecification
-    ProvisionedThroughput: 
-      ProvisionedThroughput
-    SSESpecification: 
-      SSESpecification
-    StreamSpecification: 
-      StreamSpecification
-    TableClass: String
-    TableName: campus-l3-dev-app-benjamin-table-device-dev
-    Tags: 
-      - Tag
-    TimeToLiveSpecification: 
-      TimeToLiveSpecification                
+        IndexName: "DeviceType"
+        KeySchema: 
+        -
+          AttributeName: "DeviceType"
+          KeyType: "HASH"    
+        Projection: 
+          ProjectionType: "ALL"
+        ProvisionedThroughput: 
+            ReadCapacityUnits: "10"
+            WriteCapacityUnits: "10"
