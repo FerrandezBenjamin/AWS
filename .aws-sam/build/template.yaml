@@ -50,6 +50,37 @@ Resources:
           - dynamodb:Query
           Resource:
             Fn::Sub: arn:aws:dynamodb:*:*:table/${TableName}
+      Environment:
+        Variables:
+          DEVICE_TABLE:
+            Fn::Sub: ${TableName}
+  AddDevice:
+    Type: AWS::Serverless::Function
+    Properties:
+      Tracing: Active
+      Runtime: python3.8
+      PackageType: Zip
+      FunctionName:
+        Fn::Sub: ${AppName}-add-device-${Stage}
+      Description: Add device
+      CodeUri: AddDevice
+      Handler: api_find.add_device
+      Policies:
+        Version: '2012-10-17'
+        Statement:
+          Sid: ReadWriteTable
+          Effect: Allow
+          Action:
+          - dynamodb:GetItem
+          - dyanmodb:Scan
+          - dynamodb:Query
+          - dynamodb:PutItem
+          Resource:
+            Fn::Sub: arn:aws:dynamodb:*:*:table/${TableName}
+      Environment:
+        Variables:
+          DEVICE_TABLE:
+            Fn::Sub: ${TableName}
   ApiRole:
     Type: AWS::IAM::Role
     Properties:
@@ -81,7 +112,7 @@ Resources:
     Properties:
       AttributeDefinitions:
       - AttributeName: DeviceId
-        AttributeType: N
+        AttributeType: S
       - AttributeName: DeviceName
         AttributeType: S
       - AttributeName: DeviceType

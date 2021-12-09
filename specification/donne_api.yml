@@ -48,3 +48,21 @@ paths:
         httpMethod: POST
         timeoutInMillis: 3000
         type: "aws_proxy"
+  /add-device:
+    get:
+      description: "Add devices"
+      responses:
+        '200':
+          description: Add
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/devices'
+      x-amazon-apigateway-integration:
+        credentials:
+          Fn::Sub: ${ApiRole.Arn}
+        uri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AddDevice.Arn}/invocations
+        httpMethod: POST
+        timeoutInMillis: 3000
+        type: "aws_proxy"

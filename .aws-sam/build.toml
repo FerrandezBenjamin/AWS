@@ -2,11 +2,11 @@
 
 [function_build_definitions]
 [function_build_definitions.7139ae12-0c25-48c2-872c-63cf85ab7efb]
-codeuri = "C:\\Users\\Utilisateur\\Desktop\\all\\AWS\\src\\devices"
+codeuri = "C:\\Users\\Utilisateur\\Desktop\\all\\AWS\\src"
 runtime = "python3.8"
 architecture = "x86_64"
 manifest_hash = ""
 packagetype = "Zip"
-functions = ["GetDevices"]
+functions = ["GetDevices", "AddDevice"]
 
 [layer_build_definitions]

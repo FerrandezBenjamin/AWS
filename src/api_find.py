@@ -29,21 +29,3 @@ def add_device(event, context):
         }
     else:
         print('rate bb')
-
-# def get_devices(context, event):
-#     return {
-#         "statusCode": 400,
-#         "body": json.dumps([{"id": "a", "devType": "co2", "name": "device1"},
-#                             {"id": "b", "devType": "temperature", "name": "device2"}]),
-#         "headers": {'Access-Control-Allow-Origin': '*'}
-#     }
-
-
-# def add_devices(context, event):
-#     if dynamodb:
-#         table = dynamodb.Table(DEVICES_TABLE)
-#         print ('table_creation : {}'.format(table.scan()))
-#         return {'DEVICES_TABLE":': DEVICES_TABLES}
-#     else:
-#         print('else')
-#         return 'rate bb'
