@@ -65,48 +65,12 @@ Resources:
       Description: Add device
       CodeUri: AddDevice
       Handler: api_find.add_device
-      Policies:
-        Version: '2012-10-17'
-        Statement:
-          Sid: ReadWriteTable
-          Effect: Allow
-          Action:
-          - dynamodb:GetItem
-          - dyanmodb:Scan
-          - dynamodb:Query
-          - dynamodb:PutItem
-          Resource:
-            Fn::Sub: arn:aws:dynamodb:*:*:table/${TableName}
+      Role:
+        Fn::Sub: ${DBrole.Arn}
       Environment:
         Variables:
           DEVICE_TABLE:
             Fn::Sub: ${TableName}
-  ApiRole:
-    Type: AWS::IAM::Role
-    Properties:
-      Path:
-        Fn::Sub: /${Stage}/${AppName}/serviceRoles/
-      RoleName:
-        Fn::Sub: ${AppName}-api-execution-role-${Stage}
-      AssumeRolePolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-        - Effect: Allow
-          Principal:
-            Service:
-            - apigateway.amazonaws.com
-          Action: sts:AssumeRole
-      Policies:
-      - PolicyName:
-          Fn::Sub: ${AppName}-api-execution-role-policy-${Stage}
-        PolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-          - Effect: Allow
-            Action:
-            - lambda:InvokeFunction
-            Resource:
-              Fn::Sub: ${GetDevices.Arn}
   DeviceTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -137,3 +101,65 @@ Resources:
         ProvisionedThroughput:
           ReadCapacityUnits: '10'
           WriteCapacityUnits: '10'
+  ApiRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path:
+        Fn::Sub: /${Stage}/${AppName}/serviceRoles/
+      RoleName:
+        Fn::Sub: ${AppName}-api-execution-role-${Stage}
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - apigateway.amazonaws.com
+          Action: sts:AssumeRole
+      Policies:
+      - PolicyName:
+          Fn::Sub: ${AppName}-api-execution-role-policy-${Stage}
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - lambda:InvokeFunction
+            Resource:
+              Fn::Sub: ${GetDevices.Arn}
+          - Effect: Allow
+            Action:
+            - lambda:InvokeFunction
+            Resource:
+              Fn::Sub: ${add_device.Arn]"
+  DBRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path:
+        Fn::Sub: /${Stage}/${AppName}/serviceRoles/
+      RoleName:
+        Fn::Sub: ${AppName}-db-interactions-role-${Stage}
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action: sts:AssumeRole
+      Policies:
+      - PolicyName:
+          Fn::Sub: ${AppName}-db-interactions-role-policy-dynamo-${Stage}
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - dynamodb:Scan
+            - dynamodb:Query
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            Resource:
+              Fn::Sub: ${devicesTable.Arn}
